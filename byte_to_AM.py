@@ -93,3 +93,13 @@ class Byte_to_AM:
 
     def byte_grapher(self, byte):
         return self.extend_byte(self.byte_convert(byte))
+
+    def write_to_txt(self, signal, path):
+        with open(path, 'w') as f:
+            inc = 0
+            for val in signal:
+                f.write(str(inc))
+                f.write(',')
+                f.write(str(int(np.ceil(val * 1e5))))
+                f.write('\n')
+                inc += 1

@@ -6,7 +6,7 @@ from byte_to_AM import Byte_to_AM
 byte_list =[1,1,1,1,0,0,1,0]
 resolution = 10000
 noise_profile = np.random.normal(0,1,8*resolution)
-noise_amplitude = 1
+noise_amplitude = 1.5
 Am = 0.5
 fm = 800
 Ac = 1
@@ -27,7 +27,7 @@ mt, ct, st, noisy_st = byte_to_AM.AM_signal(Tstart, Tstop, Tstep, byte_to_AM.byt
 rt = byte_to_AM.demodulate(noisy_st, Tstart, Tstop, Tstep)
 
 # recover back the bits
-threshold_multiplier = 1
+threshold_multiplier = 1.04
 recovered_data = byte_to_AM.recover_data(rt, threshold_multiplier)
 
 # graph the byte signals
@@ -65,4 +65,10 @@ def make_plots():
     plt.subplot(8,1,8)
     plt.plot(output_bits)
     plt.show()
-make_plots()
+# make_plots()
+
+byte_to_AM.write_to_txt(st, 'team1_data.txt')
+
+# to do:
+# make plots appear for all 8 things (continuously) for both teams
+# add functionality to alter the noise profile and amplitude
