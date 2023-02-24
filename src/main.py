@@ -72,3 +72,9 @@ byte_to_AM.write_to_txt(st, 'team1_data.txt')
 # to do:
 # make plots appear for all 8 things (continuously) for both teams
 # add functionality to alter the noise profile and amplitude
+
+# HOW TO MAKE STUFF OTHER THAN THE PLOTS APPEAR IN MATPLOTLIB
+# - text (team names, graph labels, direction labels for keys to press)
+
+# HOW TO CHANGE VALUES WITH BUTTONS (keypresses)
+# - amplitude of signal and noise, noise profile, signal profile?, others?

@@ -79,12 +79,12 @@ class Byte_to_AM:
         low_val = rt_sorted[0]
         high_val = rt_sorted[-1]
         avg_val = (low_val + high_val) / 2
-        print("Theshold: {} \nBit values: \n".format(avg_val * threshold_multiplier))
+        # print("Theshold: {} \nBit values: \n".format(avg_val * threshold_multiplier))
         for data_bit in range(len(self.byte_list)):
             data_bit_range = rt[data_bit * self.resolution : (data_bit + 1) * self.resolution]
             # for rt_val in data_bit_range:
             avg_bit_val = sum(data_bit_range) / self.resolution
-            print(avg_bit_val)
+            # print(avg_bit_val)
             if avg_bit_val > avg_val * threshold_multiplier:
                 recovered_list.append(1)
             else:
