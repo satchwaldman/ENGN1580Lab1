@@ -9,20 +9,22 @@ from byte_to_AM import Byte_to_AM
 
 
 fig = plt.figure()
-ax1_input_bits = fig.add_subplot(7,2,1)
-ax2_input_bits = fig.add_subplot(7,2,2)
-ax1_mt = fig.add_subplot(7,2,3)
-ax2_mt = fig.add_subplot(7,2,4)
-ax1_ct = fig.add_subplot(7,2,5)
-ax2_ct = fig.add_subplot(7,2,6)
-ax1_st = fig.add_subplot(7,2,7)
-ax2_st = fig.add_subplot(7,2,8)
-ax1_noise = fig.add_subplot(7,2,9)
-ax2_noise = fig.add_subplot(7,2,10)
-ax1_rt = fig.add_subplot(7,2,11)
-ax2_rt = fig.add_subplot(7,2,12)
-ax1_output_bits = fig.add_subplot(7,2,13)
-ax2_output_bits = fig.add_subplot(7,2,14)
+ax1_input_bits = fig.add_subplot(8,2,1)
+ax2_input_bits = fig.add_subplot(8,2,2)
+ax1_mt = fig.add_subplot(8,2,3)
+ax2_mt = fig.add_subplot(8,2,4)
+ax1_ct = fig.add_subplot(8,2,5)
+ax2_ct = fig.add_subplot(8,2,6)
+ax1_st = fig.add_subplot(8,2,7)
+ax2_st = fig.add_subplot(8,2,8)
+ax1_noise = fig.add_subplot(8,2,9)
+ax2_noise = fig.add_subplot(8,2,10)
+ax1_noisy_st = fig.add_subplot(8,2,11)
+ax2_noisy_st = fig.add_subplot(8,2,12)
+ax1_rt = fig.add_subplot(8,2,13)
+ax2_rt = fig.add_subplot(8,2,14)
+ax1_output_bits = fig.add_subplot(8,2,15)
+ax2_output_bits = fig.add_subplot(8,2,16)
 
 def animate(i):
     # generate time values
@@ -35,7 +37,7 @@ def animate(i):
     byte_list1 =[1,1,1,1,0,0,1,0]
     resolution1 = 10000
     noise_profile1 = np.random.normal(0,1,8*resolution1)
-    noise_amplitude1 = 0.1
+    noise_amplitude1 = 0.3
     Am1 = 0.5
     fm1 = 800
     Ac1 = 1
@@ -70,6 +72,8 @@ def animate(i):
     ax1_st.plot(t,st1)
     ax1_noise.clear()
     ax1_noise.plot(t,noise_profile1)
+    ax1_noisy_st.clear()
+    ax1_noisy_st.plot(t,noisy_st1)
     ax1_rt.clear()
     ax1_rt.plot(t,rt1)
     ax1_output_bits.clear()
@@ -77,10 +81,10 @@ def animate(i):
 
     # ------------------ TEAM 2 ---------------------
 
-    byte_list2 =[1,1,1,1,0,0,1,0]
+    byte_list2 =[0,0,1,0,0,0,1,1]
     resolution2 = 10000
     noise_profile2 = np.random.normal(0,1,8*resolution2)
-    noise_amplitude2 = 0.3
+    noise_amplitude2 = 0.05
     Am2 = 0.5
     fm2 = 800
     Ac2 = 1
@@ -92,18 +96,18 @@ def animate(i):
     byte_to_AM2 = Byte_to_AM(byte_list2, resolution2, noise_profile2, noise_amplitude2, Am2, fm2, Ac2, fc2, Ka2, Tau2)
 
     # generate the AM signals
-    mt2, ct2, st2, noisy_st2 = byte_to_AM2.AM_signal(Tstart, Tstop, Tstep, byte_to_AM1.byte_list)
+    mt2, ct2, st2, noisy_st2 = byte_to_AM2.AM_signal(Tstart, Tstop, Tstep, byte_to_AM2.byte_list)
 
     # demodulate the signal
     rt2 = byte_to_AM2.demodulate(noisy_st2, Tstart, Tstop, Tstep)
 
     # recover back the bits
     threshold_multiplier2 = 1.04
-    recovered_data2 = byte_to_AM1.recover_data(rt1, threshold_multiplier2)
+    recovered_data2 = byte_to_AM2.recover_data(rt2, threshold_multiplier2)
 
     # graph the byte signals
-    input_bits2 = byte_to_AM1.byte_grapher(byte_list2)
-    output_bits2 = byte_to_AM1.byte_grapher(recovered_data2)
+    input_bits2 = byte_to_AM2.byte_grapher(byte_list2)
+    output_bits2 = byte_to_AM2.byte_grapher(recovered_data2)
     
     ax2_input_bits.clear()
     ax2_input_bits.plot(t,input_bits2)
@@ -115,6 +119,8 @@ def animate(i):
     ax2_st.plot(t,st2)
     ax2_noise.clear()
     ax2_noise.plot(t,noise_profile2)
+    ax2_noisy_st.clear()
+    ax2_noisy_st.plot(t,noisy_st2)
     ax2_rt.clear()
     ax2_rt.plot(t,rt2)
     ax2_output_bits.clear()
