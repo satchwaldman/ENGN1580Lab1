@@ -68,9 +68,9 @@ class Byte_to_AM:
                 gt=self.func_filter(Vc0,t[cnt]-T,self.Tau)
         return rt
 
-    def new_sort(self, ls):
-        ls.sort()
-        return ls
+    # def new_sort(self, ls):
+    #     ls.sort()
+    #     return ls
 
     def recover_data(self, rt, threshold_multiplier):
         recovered_list = []
