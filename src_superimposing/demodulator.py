@@ -29,6 +29,7 @@ class Demodulator:
         return grc
 
     def envelop_detector(self, st):
+        Tau = 1.5e4
         t=np.arange(self.Tstart, self.Tstop, self.Tstep)
         Vc0=st[0]
         gt=self.func_filter(Vc0,0,1.5e4)
@@ -44,13 +45,13 @@ class Demodulator:
             else:
                 t1.append(t[cnt]-T)
                 rt.append(gt)
-                gt=self.func_filter(Vc0,t[cnt]-T,self.Tau)
+                gt=self.func_filter(Vc0,t[cnt]-T,Tau)
         return rt
 
     def demodulator(self, rt):
-        threshold_multiplier = 1.04
+        threshold_multiplier = 1.3
 
-        rt = self.envelop_detector(self.st)
+        # rt = self.envelop_detector(self.st)
         recovered_list = []
         rt_sorted = sorted(rt)
         rt_sorted.sort()
@@ -58,15 +59,28 @@ class Demodulator:
         high_val = rt_sorted[-1]
         avg_val = (low_val + high_val) / 2
         # print("Theshold: {} \nBit values: \n".format(avg_val * threshold_multiplier))
-        for data_bit in range(len(8)):
+
+        ### ---------- original ------------
+        # for data_bit in range(8):
+        #     data_bit_range = rt[data_bit * self.resolution : (data_bit + 1) * self.resolution]
+        #     # for rt_val in data_bit_range:
+        #     avg_bit_val = sum(data_bit_range) / self.resolution
+        #     # print(avg_bit_val)
+        #     if avg_bit_val > 0.75*avg_val * threshold_multiplier:
+        #         recovered_list.append(1)
+        #     else:
+        #         recovered_list.append(0)
+
+        ### -------------- new ----------------
+        
+        for data_bit in range(8):
             data_bit_range = rt[data_bit * self.resolution : (data_bit + 1) * self.resolution]
-            # for rt_val in data_bit_range:
-            avg_bit_val = sum(data_bit_range) / self.resolution
-            # print(avg_bit_val)
-            if avg_bit_val > avg_val * threshold_multiplier:
+            data_bit_range_sorted = sorted(data_bit_range)
+            if data_bit_range_sorted[-1] > (avg_val + high_val) * threshold_multiplier / 2:
                 recovered_list.append(1)
             else:
                 recovered_list.append(0)
+
         return recovered_list
 
     

@@ -60,6 +60,9 @@ class Demodulator:
         '''
         TODO: Write a method to decode the noisy, received signal, using a
         demodulation scheme of your choosing.
+
+        Input: Received signal (80000 element list representing a time-series)
+        Output: A list of 8 bits (0 or 1), each of which represetning the predicted bit from the respective 10000 input elements.
         '''
         pass
 

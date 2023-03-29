@@ -38,8 +38,8 @@ class Modulator:
         return ret_list
 
     def modulator(self, Tstart, Tstop, Tstep, byte):
-        noise_profile = np.random.normal(0,1,8*self.resolution)
-        noise_amplitude = 0.05
+        # noise_profile = np.random.normal(0,1,8*self.resolution)
+        # noise_amplitude = 0.05
         Am = 0.5
         fm = 800
         Ac = 1
@@ -50,5 +50,5 @@ class Modulator:
         mt=Am*np.cos(fm*t/1e6) # message
         ct=Ac*np.cos(fc*t/1e6) # carrier
         st=(1+Ka*mt)*ct * self.extend_byte(self.byte_convert(byte))# normal AM modulation
-        noisy_st = st + noise_profile * noise_amplitude
-        return noisy_st
+        # noisy_st = st + noise_profile * noise_amplitude
+        return st
