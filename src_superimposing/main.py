@@ -126,7 +126,7 @@ def animate(i):
     byte_list2 =[1,0,1,0,1,0,1,1]
     resolution2 = 10000
     noise_profile2 = np.random.normal(0,1,8*resolution2)
-    noise_amplitude2 = .2
+    noise_amplitude2 = 0
     Am2 = 0.5
     fm2 = 800
     Ac2 = 1
